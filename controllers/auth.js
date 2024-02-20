@@ -28,7 +28,7 @@ const register = async (req, res) => {
     const { password: privateField, ...data } = savedUser.toObject();
     const payload = {
       ...data,
-      token: signToken(savedUser.id),
+      token: signToken({ id: savedUser.id }),
     };
     return res.sendSuccess(payload, "User has been registered");
   } catch (error) {
@@ -52,7 +52,7 @@ const login = async (req, res) => {
     const { password: Privatefield, ...data } = user.toObject();
     const payload = {
       ...data,
-      token: signToken(user.id),
+      token: signToken({ id: user.id }),
     };
     return res.sendSuccess(payload, "User Login Successfully");
   } catch (error) {
@@ -60,7 +60,17 @@ const login = async (req, res) => {
   }
 };
 
-const checkAuth = (req, res) => {};
+const checkAuth = async (req, res) => {
+  try {
+    const user = await Auth_Schema.findById(res.userId).select("-password");
+    if (!user) {
+      return res.sendError("User not Found", 400);
+    }
+    return res.sendSuccess(user, "user data fetch successfully");
+  } catch (error) {
+    return res.sendError(error.message, 500);
+  }
+};
 
 module.exports = {
   register,

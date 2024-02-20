@@ -19,7 +19,7 @@ app.use(
 app.use(jsonResponseMiddleware);
 
 
-// routes
+//login - register - check auth routes
 app.use(AuthRoutes)
 
 app.listen(PORT, () => console.log("Port listening on " + PORT));

@@ -1,0 +1,21 @@
+const mongoose = require("mongoose");
+
+const TodoSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  content: {
+    type: String,
+    required: true,
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Auth",
+    required: true,
+  },
+});
+
+const Todo = mongoose.model("Todo", TodoSchema);
+
+module.exports = Todo;

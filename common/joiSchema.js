@@ -10,7 +10,14 @@ const loginJoiSchema = Joi.object({
   password: Joi.string().required().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
 });
 
+
+const todoJoiSchema = Joi.object({
+  title: Joi.string().required(),
+  content: Joi.string().required(),
+});
+
 module.exports = {
   registerJoiSchema,
   loginJoiSchema,
+  todoJoiSchema,
 };
